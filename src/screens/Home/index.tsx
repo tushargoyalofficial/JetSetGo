@@ -88,7 +88,7 @@ const Home: FC = () => {
 
   return (
     <SafeAreaView style={[backgroundStyle, styles.scrollView]}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor="#FB7200" barStyle="light-content" />
       <View style={styles.container}>
         <BackgroundCurve style={styles.svg} />
         <ScrollView style={styles.scrollView}>

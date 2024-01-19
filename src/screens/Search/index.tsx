@@ -6,6 +6,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import BoxItem from './BoxItem';
@@ -23,7 +24,7 @@ const Search: FC = () => {
   const {flightsData} = useSelector((state: RootState) => state.flights);
 
   const [fromLocation, setFromLocation] = useState(
-    route.params?.from || 'dehli',
+    route.params?.from || 'delhi',
   );
   const [toLocation, setToLocation] = useState(route.params?.to || 'mumbai');
   const [filterdFlightData, setFilterFlightdData] = useState<IFlightsData[]>(
@@ -57,8 +58,8 @@ const Search: FC = () => {
   };
 
   useEffect(() => {
-    setToLocation(route.params?.to);
-    setFromLocation(route.params?.from);
+    setToLocation(route.params?.to || 'mumbai');
+    setFromLocation(route.params?.from || 'delhi');
   }, [route.params]);
 
   useEffect(() => {
@@ -70,29 +71,32 @@ const Search: FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <BackgroundCurve style={styles.svg} />
-      <ScrollView style={styles.bodyContainer}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Entypo name="chevron-left" color="#fff" size={30} />
-          </TouchableOpacity>
-          <Text style={styles.headerText}>Search Result</Text>
-        </View>
-        <BoxItem
-          from={fromLocation}
-          to={toLocation}
-          swapHandler={swapLocationHandler}
-        />
-        {isLoadign ? (
-          <View>
-            <Text style={styles.loadingText}>....loading</Text>
+    <>
+      <StatusBar backgroundColor="#FB7200" barStyle="light-content" />
+      <View style={styles.container}>
+        <BackgroundCurve style={styles.svg} />
+        <ScrollView style={styles.bodyContainer}>
+          <View style={styles.headerContainer}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Entypo name="chevron-left" color="#fff" size={30} />
+            </TouchableOpacity>
+            <Text style={styles.headerText}>Search Result</Text>
           </View>
-        ) : (
-          <SearchList data={filterdFlightData} />
-        )}
-      </ScrollView>
-    </View>
+          <BoxItem
+            from={fromLocation}
+            to={toLocation}
+            swapHandler={swapLocationHandler}
+          />
+          {isLoadign ? (
+            <View>
+              <Text style={styles.loadingText}>....loading</Text>
+            </View>
+          ) : (
+            <SearchList data={filterdFlightData} />
+          )}
+        </ScrollView>
+      </View>
+    </>
   );
 };
 

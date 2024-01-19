@@ -1,5 +1,5 @@
 import React, {memo, type FC} from 'react';
-import {View, FlatList, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, FlatList, TouchableOpacity, Text, StyleSheet, StatusBar} from 'react-native';
 
 interface Notification {
   id: number;
@@ -39,17 +39,21 @@ const NotificationScreen: FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Notifications</Text>
+    <>
+      <StatusBar backgroundColor="#FB7200" barStyle="light-content" />
+
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Notifications</Text>
+        </View>
+        <FlatList
+          data={notifications}
+          renderItem={renderNotificationItem}
+          keyExtractor={item => item.id.toString()}
+          style={styles.notificationList}
+        />
       </View>
-      <FlatList
-        data={notifications}
-        renderItem={renderNotificationItem}
-        keyExtractor={item => item.id.toString()}
-        style={styles.notificationList}
-      />
-    </View>
+    </>
   );
 };
 
